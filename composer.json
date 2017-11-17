@@ -1,0 +1,30 @@
+{
+    "name": "robinthehood/migration",
+    "type": "library",
+    "description": "With migration you can easily track you database changes in you repository.",
+    "keywords": ["database", "migration", "git"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robin Wieschendorf",
+            "email": "mail@robinwieschendorf.de",
+            "homepage": "http://robinwieschendorf.de",
+            "role": "Project Founder"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "robinthehood/terminal": "^0.1.1",
+        "robinthehood/debug": "^0.1.0",
+        "robinthehood/database": "^0.1.0",
+        "robinthehood/naming-convention": "^0.1.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Migration\\": "src/"
+        }
+
+    }
+}
