@@ -11,10 +11,21 @@ class Migration
     private $migrationRootPath;
     private $statusFile;
 
-    public function __construct($dbConfig)
+    public function __construct($config)
     {
-        $this->migrationStatusPath = __DIR__ . '/../migration/status';
-        $this->migrationRootPath = __DIR__ . '/../migration/';
+        if ($config['migrationPath']) {
+            $this->migrationRootPath = $config['migrationPath'];
+        } else {
+            $this->migrationRootPath = __DIR__ . '/../migration/';
+        }
+
+        $dbConfig = [
+            'host' => $config['host'],
+            'user' => $config['user'],
+            'password' => $config['password'],
+            'database' => $config['database']
+        ];
+
         Database::getConnection($dbConfig);
 
         $migrationTable = new MigrationTable();

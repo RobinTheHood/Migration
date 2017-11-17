@@ -8,19 +8,13 @@ class Migrate
 {
     private $migration;
 
-    public function __construct($dbConfig)
+    public function __construct($config)
     {
-        $this->migration = new Migration($dbConfig);
+        $this->migration = new Migration($config);
     }
 
     public function action($argv)
     {
-        // $migrationTable = new MigrationTable();
-        // $migrationTable->create();
-        // $migrationTable->setStatus('test');
-        // $migrationTable->getStatus();
-        // die('test DONE');
-
         $command = $argv[1];
         if ($command == 'migrate' || $command == '-m') {
             $this->migration->up();
