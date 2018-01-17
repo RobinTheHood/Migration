@@ -1,9 +1,9 @@
 <?php
-namespace Migration;
+namespace RobinTheHood\Migration;
 
-use Database\Database;
-use Terminal\Terminal;
-use Debug\Debug;
+use RobinTheHood\Database\Database;
+use RobinTheHood\Terminal\Terminal;
+use RobinTheHood\Debug\Debug;
 
 class ActiveRecord
 {

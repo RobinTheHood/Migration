@@ -10,7 +10,7 @@ error_reporting(E_ALL ^E_NOTICE);
 // Composer autoload
 require_once '../vendor/autoload.php';
 
-use Migration\Migrate;
+use RobinTheHood\Migration\Migrate;
 
 // Configuration
 $dbConfig = [

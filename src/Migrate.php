@@ -1,8 +1,8 @@
 <?php
-namespace Migration;
+namespace RobinTheHood\Migration;
 
-use Migration\Migration;
-use Terminal\Terminal;
+use RobinTheHood\Migration\Migration;
+use RobinTheHood\Terminal\Terminal;
 
 class Migrate
 {

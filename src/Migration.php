@@ -1,10 +1,10 @@
 <?php
-namespace Migration;
+namespace RobinTheHood\Migration;
 
-use Terminal\Terminal;
-use Debug\Debug;
-use NamingConvention\NamingConvention;
-use Database\Database;
+use RobinTheHood\Terminal\Terminal;
+use RobinTheHood\Debug\Debug;
+use RobinTheHood\NamingConvention\NamingConvention;
+use RobinTheHood\Database\Database;
 
 class Migration
 {

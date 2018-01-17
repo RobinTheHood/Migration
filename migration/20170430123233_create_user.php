@@ -1,7 +1,7 @@
 <?php
-use Database\DatabaseType;
+use RobinTheHood\Database\DatabaseType;
 
-class CreateUserMigration extends \Migration\ActiveRecord
+class CreateUserMigration extends \RobinTheHood\Migration\ActiveRecord
 {
     public function up()
     {
