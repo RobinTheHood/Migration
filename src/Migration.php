@@ -1,4 +1,5 @@
 <?php
+
 namespace RobinTheHood\Migration;
 
 use RobinTheHood\Terminal\Terminal;
@@ -39,9 +40,9 @@ class Migration
             Terminal::outln($this->addPostfix('== nothing to do ', '=', 70), Terminal::YELLOW);
             return;
         } else {
-            foreach($activeRecordFileNames as $activeRecordFileName) {
+            foreach ($activeRecordFileNames as $activeRecordFileName) {
                 $obj = $this->getActivRecordObj($activeRecordFileName);
-                $this->_up($obj, $activeRecordFileName);
+                $this->internalUp($obj, $activeRecordFileName);
                 $this->saveStatus($activeRecordFileName);
             }
         }
@@ -75,7 +76,7 @@ class Migration
         Terminal::outln($line);
 
         $count = 0;
-        foreach($migrationFileNames as $migrationFileName) {
+        foreach ($migrationFileNames as $migrationFileName) {
             $id = $this->getActiveRecordId($migrationFileName);
             $id = $this->addPostfix($id, ' ', 18);
 
@@ -174,6 +175,7 @@ class Migration
         $statusMigraionFileName = $this->loadStatus();
 
         $migrationToDoFileNames = array();
+        $collecting = false;
         foreach ($migrationFileNames as $migrationFileName) {
             if ($collecting) {
                 $migrationToDoFileNames[] = $migrationFileName;
@@ -197,7 +199,7 @@ class Migration
         $previousActiveRecordFileName = '';
 
         $next = false;
-        foreach($activeRecordFileNames as $activeRecordFileName) {
+        foreach ($activeRecordFileNames as $activeRecordFileName) {
             if ($next == true) {
                 $previousActiveRecordFileName = $activeRecordFileName;
                 break;
@@ -210,18 +212,17 @@ class Migration
         return $previousActiveRecordFileName;
     }
 
-
-    private function _up($obj, $activeRecordFileName)
+    private function internalUp($obj, $activeRecordFileName)
     {
         $className = $this->getActiveRecordClassName($activeRecordFileName);
-        Terminal::outln($this->addPostfix('== ' . $className .': migrating ', '=', 70));
+        Terminal::outln($this->addPostfix('== ' . $className . ': migrating ', '=', 70));
         $obj->up();
     }
 
     private function down($obj, $activeRecordFileName)
     {
         $className = $this->getActiveRecordClassName($activeRecordFileName);
-        Terminal::outln($this->addPostfix('== ' . $className .': migrating rollback ', '=', 70));
+        Terminal::outln($this->addPostfix('== ' . $className . ': migrating rollback ', '=', 70));
         $obj->down();
     }
 
@@ -229,18 +230,19 @@ class Migration
     {
         $namespace =  $this->getActiveRecordNameSpace($activeRecordFileName);
         $this->loadActiveRecordFileIntoNamespace($activeRecordFileName, $namespace);
-        $classNameCamelCase .= $this->getActiveRecordClassName($activeRecordFileName);
+        $classNameCamelCase = $this->getActiveRecordClassName($activeRecordFileName);
         try {
             $rc = new \ReflectionClass('\\' . $namespace . '\\' . $classNameCamelCase);
             $obj = $rc->newInstance();
-        } catch(\ReflectionException $e) {
+        } catch (\ReflectionException $e) {
             Debug::error("Migration class not exsits: " . $classNameCamelCase);
             die();
         }
         return $obj;
     }
 
-    public function loadActiveRecordFileIntoNamespace($activeRecordFileName, $namespace) {
+    public function loadActiveRecordFileIntoNamespace($activeRecordFileName, $namespace)
+    {
         $filePath = $this->migrationRootPath . '/' . $activeRecordFileName;
         if (!\file_exists($filePath)) {
             Debug::error("Migration file not exsits.\n" . $filePath);
@@ -262,7 +264,7 @@ class Migration
 
     private function getActiveRecordClassName($activeRecordFileName)
     {
-        $classNameSnakeCase = substr($activeRecordFileName, 15, strlen($activeRecordFileName) - (16+3));
+        $classNameSnakeCase = substr($activeRecordFileName, 15, strlen($activeRecordFileName) - (16 + 3));
         $classNameCamelCase = NamingConvention::snakeCaseToCamelCaseFirstUpper($classNameSnakeCase);
         return $classNameCamelCase . 'Migration';
     }
@@ -271,7 +273,7 @@ class Migration
     {
         $result = $str;
         $count = $totalLength - strlen($str);
-        for($i=0; $i<$count;  $i++) {
+        for ($i = 0; $i < $count; $i++) {
             $result .= $postfix;
         }
         return $result;

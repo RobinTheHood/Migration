@@ -1,4 +1,5 @@
 <?php
+
 namespace RobinTheHood\Migration;
 
 use RobinTheHood\Database\Database;
@@ -7,6 +8,9 @@ use RobinTheHood\Debug\Debug;
 
 class ActiveRecord
 {
+    public $scriptTimeStart;
+    public $scriptTimeEnd;
+
     public function createTable($tableName, $attributes)
     {
         Terminal::outln('-- create_table(:' . $tableName . ')');
@@ -53,6 +57,7 @@ class ActiveRecord
     private function getSqlCreateTable($tableName, $attributes)
     {
         // Create Columns
+        $columns = '';
         foreach ($attributes as $values) {
             $columnName = $values[0];
             $columnType = $values[1];
@@ -65,7 +70,7 @@ class ActiveRecord
             }
 
             // Add , to the string as long as it is not the last interation.
-            if(end($attributes) != $values) {
+            if (end($attributes) != $values) {
                 $column .= ', ';
             }
 
@@ -104,7 +109,8 @@ class ActiveRecord
 
     private function getSqlRenameColumn($tableName, $columnNameOld, $columnNameNew, $type)
     {
-        $sql = 'ALTER TABLE `' . $tableName . '` CHANGE `' . $columnNameOld . '` `' . $columnNameNew . '` ' . $type . ';';
+        $sql = 'ALTER TABLE `'
+            . $tableName . '` CHANGE `' . $columnNameOld . '` `' . $columnNameNew . '` ' . $type . ';';
         return $sql;
     }
 

@@ -1,9 +1,9 @@
 <?php
+
 namespace RobinTheHood\Migration;
 
 use RobinTheHood\Terminal\Terminal;
 use RobinTheHood\Debug\Debug;
-use RobinTheHood\NamingConvention\NamingConvention;
 use RobinTheHood\Database\Database;
 
 class MigrationTable
@@ -90,7 +90,7 @@ class MigrationTable
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
-        if($stmt->errorCode() == 0) {
+        if ($stmt->errorCode() == 0) {
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } else {
             Debug::error('SQL-ERROR: ' . $stmt->errorInfo()[2]);
